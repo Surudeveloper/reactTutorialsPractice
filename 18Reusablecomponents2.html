@@ -1,0 +1,50 @@
+<script src="./src/reactDev.js"></script>
+<script src="./src/reactDOM.js"></script>
+<script src="./src/babel.js"></script>
+
+<div id="root"></div>
+<style>
+
+</style>
+<script type="text/babel">
+    //same codes are being repeated therefore we should reuse the code using a component
+    const List = (props) => {
+        const { data, heading } = props
+        return <div>
+            <h1>{heading}</h1>
+            <div>
+                <ol>
+                    {
+                        data.map((el, ind) => {
+                            return <li key={`li_${ind}`}>{el}</li>
+                        })
+                    }
+                </ol>
+            </div>
+        </div>
+    }
+    const App = () => {
+        const data = [
+            {
+                title: "Players",
+                items: ['p1', 'p2', 'p3', 'p4', 'p5', 'p6']
+            },
+            {
+                title: "Students",
+                items: ['s1', 's2', 's3', 's4', 's5']
+            }
+        ]
+        return <div>
+            {
+                data.map((e, i) => {
+                    return <List key={`div_${i}`} data={e.items} heading={e.title} />
+                })
+            }
+        </div>
+    }
+
+    const container = document.getElementById("root");
+    const root = ReactDOM.createRoot(container)
+    root.render(<App />)
+
+</script>

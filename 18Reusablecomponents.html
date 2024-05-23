@@ -9,21 +9,24 @@
 <script type="text/babel">
     //same codes are being repeated therefore we should reuse the code using a component
     const List = (props) => {
-        const { data } = props
+        const { data, heading } = props
         return <div>
-            <ol>
-                {
-                    data.map((el, ind) => {
-                        return <li key={`li_${ind}`}>{el}</li>
-                    })
-                }
-            </ol>
+            <h1>{heading}</h1>
+            <div>
+                <ol>
+                    {
+                        data.map((el, ind) => {
+                            return <li key={`li_${ind}`}>{el}</li>
+                        })
+                    }
+                </ol>
+            </div>
         </div>
     }
     const App = () => {
         const students = ['s1', 's2', 's3', 's4', 's5']
         const Players = ['p1', 'p2', 'p3', 'p4', 'p5', 'p6']
-        
+
         // return <div>
         //     <h1>Players</h1>
         //     <ol>
@@ -44,11 +47,15 @@
 
         // </div>
         return <div>
-            <h1>Players</h1>
-            <List data={Players} />
-            <h1>Students</h1>
-            <List data={students} />
+            <List data={Players} heading={"Players"}/>
+            <List data={students} heading={"Students"}/>
         </div>
+        // return <div>
+        //     <h1>Players</h1>
+        //     <List data={Players} />
+        //     <h1>Students</h1>
+        //     <List data={students} />
+        // </div>
     }
 
     const container = document.getElementById("root");

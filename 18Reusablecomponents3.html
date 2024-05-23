@@ -1,0 +1,94 @@
+<script src="./src/reactDev.js"></script>
+<script src="./src/reactDOM.js"></script>
+<script src="./src/babel.js"></script>
+
+<div id="root"></div>
+<style>
+
+</style>
+<script type="text/babel">
+    const Table = (props) => {
+        const { data, heading, title, columns } = props
+        return <div>
+            <h1>{title}</h1>
+            <table border="2px">
+                <thead>
+                    <tr>
+                        {
+                            heading.map((el, i) => {
+                                return <th key={`th_${i}`}>{el}</th>
+                            })
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        data.map((e, i) => {
+                            return <tr key={`tr_${i}`}>
+                                {
+                                    columns.map((ele, ind) => {
+                                        return <td key={`td_${ind}`}>{e[ele]}</td>
+                                    })
+                                }
+                            </tr>
+                        })
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    const App = () => {
+        const students = [
+            {
+                name: "Suresh",
+                rno: 1
+            },
+            {
+                name: "Rohit",
+                rno: 2
+            },
+            {
+                name: "SKY",
+                rno: 3
+            },
+        ]
+        const Players = [
+            {
+                name: "Suresh",
+                runs: 10050,
+                city: 'Delhi'
+            },
+            {
+                name: "Rohit",
+                runs: 10050,
+                city: 'Banglore'
+            },
+            {
+                name: "SKY",
+                runs: 3050,
+                city: 'Mumbai'
+            },
+            {
+                name: "UV",
+                runs: 30500,
+                city: 'Mumbai'
+            },
+            {
+                name: "Virat",
+                runs: 35500,
+                city: 'Lucknow'
+            },
+        ]
+        return <div>
+            <Table data={students} heading={['Name', 'Roll No']} title={'Students'} columns={['name', 'rno']} />
+            <Table data={Players} heading={['Name', 'Runs', 'City']} title={'Players'} columns={['name', 'runs', 'city']} />
+
+        </div>
+    }
+
+    const container = document.getElementById("root");
+    const root = ReactDOM.createRoot(container)
+    root.render(<App />)
+
+</script>
