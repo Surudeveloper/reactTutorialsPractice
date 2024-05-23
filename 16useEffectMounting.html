@@ -1,0 +1,39 @@
+<script src="./src/reactDev.js"></script>
+<script src="./src/reactDOM.js"></script>
+<script src="./src/babel.js"></script>
+
+<div id="root"></div>
+<style>
+
+</style>
+<script type="text/babel">
+// use effect is a hook which is used to handle the lifecycle phases
+// 1.Mounting 2.Updating 3.Unmounting
+    const App = () => {
+        const [name, setName]=React.useState('Sachin') 
+        const fn =()=>{
+            console.log('loaded fn');
+        }
+        // 1. this will be called 1st after DOM load & then every value updation
+        // React.useEffect(()=>{
+        //     fn()
+        // }) 
+        // 2. if called like this using 2nd arg, it will execute only 1 time after loading DOM 
+        React.useEffect(()=>{
+            fn()
+        },[])  
+        
+        const handleClick=()=>{
+            setName(name=='Sachin'?'Dhoni':'Sachin')
+        }
+        return <div>
+            <h1>{name}</h1>
+            <button onClick={handleClick}>Click</button>
+        </div>
+    }
+
+    const container = document.getElementById("root");
+    const root = ReactDOM.createRoot(container)
+    root.render(<App />)
+
+</script>

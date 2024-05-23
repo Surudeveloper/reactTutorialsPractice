@@ -1,0 +1,59 @@
+<!--  
+    * create a arrow and board with 1 button, when we click button it shoots the board slowly
+-->
+<!-- <script src="reactDev.js"></script>
+<script src="reactDOM.js"></script>
+<script src="babel.js"></script> -->
+<script src="./src/reactDev.js"></script>
+<script src="./src/reactDOM.js"></script>
+<script src="./src/babel.js"></script>
+
+<div id="root"></div>
+<style>
+    ul {
+        margin: 0px;
+        padding: 0px;
+        list-style-type: none;
+        border: 1px solid blue;
+        background: cyan;
+        line-height: 45px;
+        text-align: right;
+    }
+
+    ul>li {
+        display: inline;
+        font-size: 25px;
+        margin: 20px;
+        font-weight: bold;
+        font-style: oblique;
+        cursor: pointer;
+        letter-spacing: 3px;
+    }
+
+    .active {
+        color: red;
+        text-shadow: 2px 2px 2px yellowgreen;
+    }
+</style>
+<script type="text/babel">
+
+
+    const App = () => {
+        const [item, setItem] = React.useState('Home')
+        const fnClickMenu = (e) => {
+            setItem(e.target.innerHTML)
+        }
+        return <div>
+            <ul>
+                <li className={item == 'Home' ? 'active' : ''} onClick={fnClickMenu}>Home</li>
+                <li className={item == 'Contact' ? 'active' : ''} onClick={fnClickMenu}>Contact</li>
+                <li className={item == 'About' ? 'active' : ''} onClick={fnClickMenu}>About</li>
+            </ul>
+        </div>
+    }
+
+    const container = document.getElementById("root");
+    const root = ReactDOM.createRoot(container)
+    root.render(<App />)
+
+</script>

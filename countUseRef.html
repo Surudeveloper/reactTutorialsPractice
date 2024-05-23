@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+
+        const App = () => {
+            // const [no, updateNo] = React.useState('')
+            let myRef = React.useRef()
+            var cnt = 0
+            console.log('myRef = ', myRef);
+            const clickhandler = (event) => {
+                console.log('myRef1 = ', myRef);
+                cnt += 1
+                myRef.current.innerHTML = cnt
+            }
+            return <div>
+                <h1 ref={myRef}>{cnt}</h1>
+                <button onClick={clickhandler}>Increment</button>
+            </div>
+        }
+        var container = document.getElementById("root")
+        var root = ReactDOM.createRoot(container)
+        root.render(<App />)
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,80 @@
+<script src="./src/reactDev.js"></script>
+<script src="./src/reactDOM.js"></script>
+<script src="./src/babel.js"></script>
+
+<div id="root"></div>
+<style>
+
+</style>
+<script type="text/babel">
+
+    const ctx1 = React.createContext()
+    const ctx2 = React.createContext()
+    
+    //OR
+    const { Provider:Ctx1Provider } = ctx1 //now Ctx1Provider is an alias name for Provider now we can use by its alias name
+    const { Provider:Ctx2Provider } = ctx2
+
+    const D = () => {
+        const ctxData1 = React.useContext(ctx1)
+        return <div>
+            <p>D Component </p>
+            <span> Result:{ctxData1}</span>
+        </div>
+    }
+    const C = () => {
+        return <div>
+            <p>C Component</p>
+            <D />
+        </div>
+    }
+    const B = () => {
+        const ctxData2 = React.useContext(ctx2)
+        return <div>
+            <p>B Component</p>
+            <span> Result:{ctxData2}</span>
+            <C />
+        </div>
+    }
+    const A = () => {
+        return <div>
+            <p>A Component</p>
+            <B />
+        </div>
+    }
+    const App = () => {
+        const [name, setName] = React.useState('')
+        const [data, setData] = React.useState('No Data')
+
+        const ChangeHAndler = (eve) => {
+            setName(eve.target.value)
+        }
+        const ClickHAndler = () => {
+            setData(name)
+            setName('') //to empty the input after click
+        }
+
+        return <div>
+            <p>App</p>
+            <p>Player: <input type="text" onChange={ChangeHAndler} value={name}></input></p>
+            <button onClick={ClickHAndler}>Submit</button>
+            {/* to commment jsx items use like this 
+                <ctx1.Provider value={'Sachin'}>
+                <ctx2.Provider value={'dhoni'}>
+                    <A />
+                </ctx2.Provider>
+            </ctx1.Provider >*/}
+            <Ctx1Provider value={'Sachin'}>
+                <Ctx2Provider value={'Dhoni'}>
+                    <A />
+                </Ctx2Provider>
+            </Ctx1Provider >
+
+        </div>
+    }
+
+    const container = document.getElementById("root");
+    const root = ReactDOM.createRoot(container)
+    root.render(<App />)
+
+</script>

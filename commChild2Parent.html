@@ -1,0 +1,45 @@
+<script src="./src/reactDev.js"></script>
+<script src="./src/reactDOM.js"></script>
+<script src="./src/babel.js"></script>
+
+<div id="root"></div>
+<style>
+
+</style>
+<script type="text/babel">
+    const A = (prop) => {
+        const [val, setVal] = React.useState('')
+        const clickHandler=()=>{
+            prop.fn(val)
+        }
+        const onchangeFn=(e)=>{
+            setVal(e.target.value)
+        }
+        
+        return <div>
+            <p>Child</p>
+            <p>Name: <input onChange={onchangeFn} type="text"></input> </p>
+            <button onClick={clickHandler}>Send to Parent App</button>
+        </div>
+    }
+    // child 2 parent
+    //use callback in parent and use it as prop in child
+    //call that callback fn with available data as argument
+    //use that data in the parent to use that value as a result
+    const App = () => {
+        const[finalVal, setFinal] = React.useState('')
+        const CBFunction=(nam)=>{
+            // alert('cb called '+ nam)
+            setFinal(nam)
+        }
+        return <div>
+            <p>Parent : {finalVal}</p>
+            <A  fn={CBFunction}/>
+        </div>
+    }
+
+    const container = document.getElementById("root");
+    const root = ReactDOM.createRoot(container)
+    root.render(<App />)
+
+</script>

@@ -1,0 +1,45 @@
+<!--  
+    * find the sum of 2 numbers. if greater than 100 red in colour else green colour
+    * TextBox 1: Create required state variables data,clr,result
+    * TextBox 2: Handle onChange event and update the n1,n2 values in data state variable with spread operator
+    * TextBox 3: Handle onClick event, find sum and update clr and result state variables.
+-->
+<script src="./src/reactDev.js"></script>
+<script src="./src/reactDOM.js"></script>
+<script src="./src/babel.js"></script>
+<!-- <script src="reactDev.js"></script>
+<script src="reactDOM.js"></script>
+<script src="babel.js"></script> -->
+
+<div id="root"></div>
+<script type="text/babel">
+
+    const App = () => {
+        const fstRef = React.useRef()
+        const sndRef = React.useRef()
+        const h1Ref = React.useRef()
+        const clickSum = () => {
+            var a = Number(fstRef.current.value)
+            var b = Number(sndRef.current.value)
+            var total = a + b
+            h1Ref.current.innerText = (total) //for useRef value
+            h1Ref.current.style.color = total > 100 ? 'red' : 'blue'
+        }
+        return <div>
+            <p><b>Enter 1st Number</b>
+                <input ref={fstRef} type="number"></input>
+            </p>
+            <p><b >Enter 2nd Number</b>
+                <input ref={sndRef} type="number"></input>
+            </p>
+            <button onClick={clickSum}>Sum</button>
+            <p><b>Total = </b><b ref={h1Ref}></b></p>
+
+        </div>
+    }
+
+    var container = document.getElementById("root");
+    var root = ReactDOM.createRoot(container)
+    root.render(<App />)
+
+</script>

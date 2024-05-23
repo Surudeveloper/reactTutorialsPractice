@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!--  
+    * find the sum of 2 numbers. if greater than 100 red in colour else green colour
+    * TextBox 1: Create required state variables data,clr,result
+    * TextBox 2: Handle onChange event and update the n1,n2 values in data state variable with spread operator
+    * TextBox 3: Handle onClick event, find sum and update clr and result state variables.
+-->
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const App = () => {
+            const [result, setResult] = React.useState('');
+            const [data, setData] = React.useState({})
+            const [clr, setClr] = React.useState('')
+            const fnChange = (eve) => {
+                const { id, value } = eve.target;
+                setData({
+                    ...data,
+                    [id]: value
+                })
+            }
+            const fnClick = (opt) => {
+                const { n1, n2 } = data
+                const sum = parseInt(n1) + parseInt(n2)
+                setResult(sum)
+                setClr(sum > 100 ? 'red' : 'blue')
+            }
+
+            return <div>
+                <p>
+                    <b>No1: </b><input id='n1' type="number" onChange={fnChange} />
+                </p>
+                <p>
+                    <b>No2: </b><input id='n2' type="number" onChange={fnChange} />
+                </p>
+                <p>
+                    <button onClick={fnClick}>ADD</button>
+                </p>
+                <h1 style={{ color: clr }}>{result}</h1>
+            </div>
+        }
+
+        const container = document.getElementById('root');
+        const root = ReactDOM.createRoot(container);
+        root.render(<App />);
+
+    </script>
+    <!--
+        Note: this page is a great way to try React but it's not suitable for production.
+        It slowly compiles JSX with Babel in the browser and uses a large development build of React.
+        
+        Read this page for starting a new React project with JSX:
+        https://react.dev/learn/start-a-new-react-project
+        
+        Read this page for adding React with JSX to an existing project:
+        https://react.dev/learn/add-react-to-an-existing-project
+    -->
+</body>
+
+</html>

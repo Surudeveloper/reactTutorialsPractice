@@ -1,0 +1,74 @@
+<script src="./src/reactDev.js"></script>
+<script src="./src/reactDOM.js"></script>
+<script src="./src/babel.js"></script>
+
+<div id="root"></div>
+<style>
+
+</style>
+<script type="text/babel">
+
+    const App = () => {
+        const players = ['Sachin', 'Dhoni', 'UV', 'SKY', 'UZI']
+        return <div>
+            <ol>
+                {
+                    players.map((el, ind) => {
+                        return <li key={ind}>{el}</li>
+                    })
+                }
+
+            </ol>
+            <h1>Dropdown</h1>
+            <select name="" id="">
+                {
+                    players.map((e, i) => {
+                        return <option key={'opt_' + i} value={e}>{e}</option>
+                    })
+                }
+            </select>
+            <h1>Buttons</h1>
+            <div >
+                {
+                    players.map((e, i) => {
+                        return <button key={'btn_' + i} >{e}</button>
+                    })
+                }
+            </div>
+            <h1>Table</h1>
+            <table border="1px">
+                <thead>
+                    <tr>
+                        <th>Sno</th>
+                        <th>Name</th>
+                        <th>view</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        players.map((e, i) => {
+                            return <tr key={'tr_' + i}>
+                                <td>{i + 1}</td>
+                                <td >{e}</td>
+                                <td ><button>view</button></td>
+                            </tr>
+                        })
+                    }
+                </tbody>
+            </table>
+            <h1>Players</h1>
+            <div>
+                {
+                    players.map((e, i) => {
+                        return <h3 key={`h3_${i}`}>{e}</h3>
+                    })
+                }
+            </div>
+        </div>
+    }
+
+    const container = document.getElementById("root");
+    const root = ReactDOM.createRoot(container)
+    root.render(<App />)
+
+</script>

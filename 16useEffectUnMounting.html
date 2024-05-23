@@ -1,0 +1,42 @@
+<script src="./src/reactDev.js"></script>
+<script src="./src/reactDOM.js"></script>
+<script src="./src/babel.js"></script>
+
+<div id="root"></div>
+<style>
+
+</style>
+<script type="text/babel">
+    const A = () => {
+        const fn = () => {
+            console.log('I am going to unMount......');
+        }
+        // this return function will be called by useEffect just before unmounting
+        React.useEffect(() => {
+            return () => {
+                fn()
+            }
+        }, [])
+        return <div>
+            <h1>A component</h1>
+        </div>
+    }
+
+    const App = () => {
+        const [cnt, setCnt] = React.useState(0)
+        
+        const handleCount = () => {
+            setCnt(cnt + 1)
+        }
+        return <div>
+            <h1>{cnt}</h1>
+            <button onClick={handleCount}>Increment</button>
+            {cnt % 2 == 0 && <A />}
+        </div>
+    }
+
+    const container = document.getElementById("root");
+    const root = ReactDOM.createRoot(container)
+    root.render(<App />)
+
+</script>

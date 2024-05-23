@@ -1,0 +1,117 @@
+<script src="../src/reactDev.js"></script>
+<script src="../src/babel.js"></script>
+<script src="../src/reactDOM.js"></script>
+
+<link rel="stylesheet" href="../src/bootstrap.css">
+
+<style>
+    body {
+        margin: 0px;
+    }
+
+    .header {
+        padding: 10;
+        font-size: 40px;
+        font-weight: bold;
+        font-style: italic;
+    }
+
+    .menu {
+        background: aquamarine;
+        text-align: right;
+        font-weight: bold;
+        letter-spacing: 2;
+        line-height: 35px;
+    }
+
+    .menu>li {
+        display: inline;
+        text-align: right;
+        margin: 20px;
+        cursor: pointer;
+    }
+
+    .active {
+        color: red
+    }
+
+    @media screen and (max-width:700px) {
+        .header {
+            padding: 10;
+            font-size: 30px;
+            font-weight: bold;
+            font-style: italic;
+        }
+    }
+</style>
+
+<div id="root"></div>
+<script type="text/babel">
+
+    const ctx = React.createContext()
+    const { Provider } = ctx
+
+    const Home = () => {
+        const ctxData = React.useContext(ctx)
+        return <div>
+            <h1 className="text-center my-5">{ctxData.home}</h1>
+        </div>
+    }
+    const Contact = () => {
+        const ctxData = React.useContext(ctx)
+        return <div>
+            <h1 className="text-center my-5">{ctxData.contact}</h1>
+        </div>
+    }
+    const About = () => {
+        const ctxData = React.useContext(ctx)
+        return <div>
+            <h1 className="text-center my-5">{ctxData.about}</h1>
+        </div>
+    }
+    const Menu = () => {
+        const [menuItem, setMenuItem] = React.useState('h')
+        // const clickHandler=(eve)=>{
+        //     setMenuItem(eve.target.innerText)
+        // }
+        const clickHandler = (prop) => {
+            setMenuItem(prop)
+        }
+        return <div>
+            <nav>
+                <ul className="menu">
+                    <li className={menuItem == 'h' ? 'active' : ''} onClick={() => clickHandler('h')}>Home</li>
+                    <li className={menuItem == 'c' ? 'active' : ''} onClick={() => clickHandler('c')}>Contact</li>
+                    <li className={menuItem == 'a' ? 'active' : ''} onClick={() => clickHandler('a')}>About</li>
+                </ul>
+            </nav>
+
+            {menuItem == 'h' && <Home />}
+            {menuItem == 'c' && <Contact />}
+            {menuItem == 'a' && <About />}
+
+        </div>
+    }
+    const Header = () => {
+        return <header><div className='header bg-primary text-center text-white'>React Webpage without Routes</div></header>
+    }
+    const Footer = () => {
+        return <footer><div className="footer position-fixed bottom-0 w-100 bg-primary text-center text-white">&copy; This site belongs to me</div></footer>
+    }
+    const App = () => {
+        const data = {
+            home: 'This is Home Page',
+            contact: 'This is Contact Page',
+            about: 'This is About Page'
+        }
+        return <div>
+            <Header />
+            <Provider value={data}>
+                <Menu />
+            </Provider>
+            <Footer />
+        </div>
+    }
+    const root = ReactDOM.createRoot(document.getElementById("root"))
+    root.render(<App />)
+</script>

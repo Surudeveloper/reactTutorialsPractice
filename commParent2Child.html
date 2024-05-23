@@ -1,0 +1,34 @@
+<script src="./src/reactDev.js"></script>
+<script src="./src/reactDOM.js"></script>
+<script src="./src/babel.js"></script>
+
+<div id="root"></div>
+<style>
+
+</style>
+<script type="text/babel">
+    const A = (prop) => {
+        return <div>
+            <p>A:{prop.playerName}</p>
+        </div>
+    }
+    // parent 2 child
+    const App = () => {
+        const [inpVal, setInp] = React.useState('')
+        const myRef = React.useRef('')
+        const btnClickFn = () => {
+            setInp(myRef.current.value)
+        }
+        return <div>
+            <p>Parent</p>
+            <p>Name: <input ref={myRef} type="text"></input> </p>
+            <button onClick={btnClickFn}>Send to Child A</button>
+            <A playerName={inpVal} />
+        </div>
+    }
+
+    const container = document.getElementById("root");
+    const root = ReactDOM.createRoot(container)
+    root.render(<App />)
+
+</script>

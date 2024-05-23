@@ -1,0 +1,70 @@
+<!--  
+    * create a arrow and board with 1 button, when we click button it shoots the board slowly
+-->
+<script src="./src/reactDev.js"></script>
+<script src="./src/reactDOM.js"></script>
+<script src="./src/babel.js"></script>
+<!-- <script src="reactDev.js"></script>
+<script src="reactDOM.js"></script>
+<script src="babel.js"></script> -->
+
+<div id="root"></div>
+<style>
+    #border {
+        border: 3px solid red;
+        height: 400px;
+        width: 800px;
+        display: inline-block;
+    }
+
+    .arrow { 
+        border: 2px solid blue;
+        width: 100px;
+        display: inline-block;
+        position: absolute;
+        top: 205px;
+    }
+
+    .target {
+        height: 200px;
+        border: solid black 2px;
+        display: inline-block;
+        margin-left: 770px;
+        margin-top: 90px;
+    }
+</style>
+<script type="text/babel">
+
+
+    const App = () => {
+        const [val, setVal] = React.useState(0)
+        const shootArrow = () => {
+            if (val == 0) {
+                let x = setInterval(() => {
+                    setVal((currentVal) => {
+                        if (currentVal == 667) {
+                            clearInterval(x)
+                        }
+                        return currentVal + 1
+                    })
+                })
+            } else {
+                setVal(0)
+            }
+        }
+        return <div>
+            <div id="border">
+                <div style={{ marginLeft: val }} className="arrow"></div>
+                <div className="target"></div>
+            </div>
+            <p>
+                <button onClick={shootArrow}>Shoot</button>
+            </p>
+        </div>
+    }
+
+    const container = document.getElementById("root");
+    const root = ReactDOM.createRoot(container)
+    root.render(<App />)
+
+</script>
