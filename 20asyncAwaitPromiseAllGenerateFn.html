@@ -1,0 +1,108 @@
+<script> // generator fn
+    /*
+        //--------------------------------without yeild value-----------------------------------
+        function* fn(){  // generator fn will return an object
+            console.log(1)
+            yeild  // instead of return write yeild
+            console.log(2)
+            yeild
+            console.log(3)
+        }
+
+        var genObj = fn()
+        genObj.next()  // upto the 1st yeild in the fn & this will return object = {value:undefined, done:false}
+        genObj.next()  // upto the 2nd yeild in the fn & this will return object = {value:undefined, done:false}
+        genObj.next()  // end statement in the fn & this will return object = {value:undefined, done:true}
+
+        iterate this till (done == true) this means all the statements are now executed 
+
+
+        //--------------------------------with yeild value-----------------------------------
+        function* fn(){  // generator fn will return an object
+            console.log(1)
+            yeild 10 // instead of return write yeild
+            console.log(2)
+            yeild 20
+            console.log(3)
+        }
+
+        var genObj = fn()
+        genObj.next()  // upto the 1st yeild in the fn & this will return object = {value:10, done:false}
+        genObj.next()  // upto the 2nd yeild in the fn & this will return object = {value:20, done:false}
+        genObj.next()  // end statement in the fn & this will return object = {value:undefined, done:true}
+
+    */
+    /*
+        1. Promise.resolve  (type=fn) (Promise is functional Class)
+        2. Promise.reject
+        3. Promise.all
+        4. Promise.allSettled
+        5. Promise.any
+        6. Promise.race
+
+        //-------------------------Promise.resolve---------------------------------------
+            Promise.resolve()  returns Promise obj Promise {<fulfilled>: undefined}
+            Promise.resolve(10)  returns Promise obj Promise {<fulfilled>: 10}
+        
+            //------now by how many ways we can get the return as Promise {<fulfilled>: 10}---
+            
+            1.  Promise.resolve(10)
+            2.  new Promise((resolve,reject)=>{
+                    resolve(10)
+                })
+            3.  async function fn (){ //this will always return a value as a success thats why will not use in reject method
+                    return 10
+                }
+                fn()
+            
+        //-------------------------Promise.reject---------------------------------------
+            Promise.reject() returns Promise obj Promise {<rejected>: undefined}
+            Promise.reject(100) returns Promise obj Promise {<rejected>: 100}
+
+            Promise.reject(100)
+            .then(
+                ()=>{
+                },
+                (data)=>{
+                    console.log('error data', data)
+                }
+            )
+            ---OR---
+            Promise.reject(100)
+            .then(
+                ()=>{
+                }
+            )
+            .catch(
+                (data)=>{
+                    console.log('catch error data', data)
+                }
+            )
+
+            //------now by how many ways we can get the return as Promise {<rejected>: 100}---
+            1.  Promise.reject(100)
+            2.  new Promise((resolve, reject)=>{
+                    reject(100)
+                })
+
+        //-------------------------Promise.all---------------------------------------
+        
+    */
+    function f1() { // f1() will return a direct value
+        return 10
+    }
+    async function f1() { //f1() will return a promise obj
+        return 10
+    }
+
+    f1()
+        .then((data) => { // data is the return value of resolve
+            console.log('await called');
+        })
+        .catch((data) => { // data is the return value of reject
+            console.log('catch called');
+        })
+        .finally(() => {
+            console.log('finally called');
+        })
+</script>

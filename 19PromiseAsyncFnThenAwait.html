@@ -1,0 +1,131 @@
+<script>
+    /* -------------notes------------------------------
+        promiseObj
+            .then(
+                function (){ // for resolve 
+                },
+                function (){ // for reject call
+                }
+            )
+    
+        promiseObj
+            .then(
+                function (){ // for resolve call
+                }
+            )
+            .catch(
+                function (){ // for reject call
+                }
+            )
+    
+        promiseObj
+            .then(
+                function (){ // for resolve call
+                }
+            )
+            .catch(
+                function (){ // for reject call
+                }
+            )
+            .finally(
+                function (){ // for every call                
+                }
+            )
+        */
+    function printCards(text, no) {
+        return new Promise(function (resolve, reject) {
+            console.log('Printing Started...');
+            console.log('Printing Going on...');
+            const isSuccess = true
+            if (isSuccess == true) {
+                console.log('Printing Completed successfully...');
+                resolve(100) // '1st called'
+                // reject(50) // '2nd called'
+            }
+        })
+    }
+
+    // then fn returns again a promise object
+
+
+
+    printCards('Farewell', 100)
+        .then(
+            function (data) {
+                console.log('1st called');
+                console.log('Printed 70 cards...');
+                console.log(`Printed ${data} cards...`);
+                return 30
+            },
+            function (data) {
+                console.log('2nd called');
+            }
+        )
+        .then(
+            function () {
+                console.log('1st called');
+                console.log('Printed 30 cards...');
+                return 0
+            },
+            function () {
+                console.log('2nd called');
+            }
+        )
+
+    printCards('Farewell', 100) // for reject
+        .then(
+            function (data) {
+                console.log('1st fn called');
+                console.log('Printed 70 cards...');
+                console.log(`Printed ${data} cards...`);
+                return 30
+            },
+            function (data) { // priority will be given to then fn
+                console.log('2nd fn called'); // in this case this will be called not the catch fn
+            }
+        )
+        .catch(
+            function () {
+                console.log('Catch called'); // will not execute
+                return 0
+            }
+        )
+
+    printCards('Farewell', 100)
+        .then(
+            function (data) {
+                console.log('1st fn called');
+                console.log('Printed 70 cards...');
+                console.log(`Printed ${data} cards...`);
+                return 30
+            }
+        )
+        .catch(
+            function () {
+                console.log('Catch called');
+                return 0
+            }
+        )
+
+    printCards('Farewell', 100)
+        .then(
+            function (data) {
+                console.log('1st fn called');
+                console.log('Printed 70 cards...');
+                console.log(`Printed ${data} cards...`);
+                return 30
+            }
+        )
+        .catch(
+            function () {
+                console.log('Catch called');
+                return 0
+            }
+        )
+        .finally(
+            function () {
+                console.log('Finally called'); // this will execute every time either it is success or failure
+            }
+        )
+
+</script>
