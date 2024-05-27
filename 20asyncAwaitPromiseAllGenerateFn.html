@@ -1,35 +1,36 @@
 <script> // generator fn
     /*
         //--------------------------------without yeild value-----------------------------------
-        function* fn(){  // generator fn will return an object
-            console.log(1)
-            yeild  // instead of return write yeild
-            console.log(2)
-            yeild
-            console.log(3)
-        }
+            1. we can control the execution of the statements of the function using yeild
+            function* fn(){  // generator fn will return an object
+                console.log(1)
+                yeild  // instead of return write yeild
+                console.log(2)
+                yeild
+                console.log(3)
+            }
 
-        var genObj = fn()
-        genObj.next()  // upto the 1st yeild in the fn & this will return object = {value:undefined, done:false}
-        genObj.next()  // upto the 2nd yeild in the fn & this will return object = {value:undefined, done:false}
-        genObj.next()  // end statement in the fn & this will return object = {value:undefined, done:true}
+            var genObj = fn()
+            genObj.next()  // upto the 1st yeild in the fn & this will return object = {value:undefined, done:false}
+            genObj.next()  // upto the 2nd yeild in the fn & this will return object = {value:undefined, done:false}
+            genObj.next()  // end statement in the fn & this will return object = {value:undefined, done:true}
 
-        iterate this till (done == true) this means all the statements are now executed 
+            iterate this till (done == true) this means all the statements are now executed 
 
 
         //--------------------------------with yeild value-----------------------------------
-        function* fn(){  // generator fn will return an object
-            console.log(1)
-            yeild 10 // instead of return write yeild
-            console.log(2)
-            yeild 20
-            console.log(3)
-        }
+            function* fn(){  // generator fn will return an object
+                console.log(1)
+                yeild 10 // instead of return write yeild
+                console.log(2)
+                yeild 20
+                console.log(3)
+            }
 
-        var genObj = fn()
-        genObj.next()  // upto the 1st yeild in the fn & this will return object = {value:10, done:false}
-        genObj.next()  // upto the 2nd yeild in the fn & this will return object = {value:20, done:false}
-        genObj.next()  // end statement in the fn & this will return object = {value:undefined, done:true}
+            var genObj = fn()
+            genObj.next()  // upto the 1st yeild in the fn & this will return object = {value:10, done:false}
+            genObj.next()  // upto the 2nd yeild in the fn & this will return object = {value:20, done:false}
+            genObj.next()  // end statement in the fn & this will return object = {value:undefined, done:true}
 
     */
     /*
@@ -86,7 +87,85 @@
                 })
 
         //-------------------------Promise.all---------------------------------------
+            1. Promise.all takes an array as an argument which contains all the promise object
+            2. it will give the result when all the promises got fulfilled.
+            3. once any one of the promise get rejected it will immedietely throw the result after that rejected promise. (returns as Promise {<rejected>:'prom1-100'}
+            4. Suitable only when we know all promises will get success.
+
+            const promObj1= new Promise((resolve, reject)=>{
+                resolve('prom1-100')
+            })
+            const promObj2= new Promise((resolve, reject)=>{
+                resolve('prom2-200')
+            })
+
+            Promise.all([promObj1,promObj2]) // returns promise object with an array containing all the Promise results
+            const promiseObj = Promise.all([promObj1,promObj2])
+
+            promiseObj
+                .then((data)=>{
+                    console.log(data)  // returns ['prom1-100', 'prom2-200']
+                })  
+
+        //-------------------------Promise.allSettled---------------------------------------
+            1. it will give the result when all the promises got fulfilled or rejected.
+
+            const promObj1= new Promise((resolve, reject)=>{
+                resolve('prom1-100')
+            })
+            const promObj2= new Promise((resolve, reject)=>{
+                reject('prom2-200')
+            })
+            const promObj3= new Promise((resolve, reject)=>{
+                setTimeout(()=>{
+                    resolve('prom3-300')
+                }, 1000)
+            })
+
+            Promise.allSettled(([promObj1,promObj2,promObj3]) // returns Promise {<fulfilled>:Array(3)} 
+
+        //-------------------------Promise.race---------------------------------------
+            1. it will give the 1st fulfilled/rejected result of all the promises.
+
+            const promObj1= new Promise((resolve, reject)=>{
+                setTimeout(()=>{
+                    resolve('prom1-100')
+                }, 100)
+            })
+            const promObj2= new Promise((resolve, reject)=>{
+                setTimeout(()=>{
+                    reject('prom2-200')
+                }, 500)
+            })
+            const promObj3= new Promise((resolve, reject)=>{
+                setTimeout(()=>{
+                    resolve('prom3-300')
+                }, 1000)
+            })
+
+            Promise.race(([promObj1,promObj2,promObj3])  // returns Promise {<fulfilled>:'prom1-100'} // value 
         
+        //-------------------------Promise.any---------------------------------------
+            1. it will give the 1st fulfilled result of all the promises.
+
+            const promObj1= new Promise((resolve, reject)=>{
+                setTimeout(()=>{
+                    reject('prom1-100')
+                }, 100)
+            })
+            const promObj2= new Promise((resolve, reject)=>{
+                setTimeout(()=>{
+                    resolve('prom2-200')
+                }, 500)
+            })
+            const promObj3= new Promise((resolve, reject)=>{
+                setTimeout(()=>{
+                    resolve('prom3-300')
+                }, 1000)
+            })
+
+            Promise.race(([promObj1,promObj2,promObj3])  // returns Promise {<fulfilled>:'prom2-200'} // value 
+
     */
     function f1() { // f1() will return a direct value
         return 10
