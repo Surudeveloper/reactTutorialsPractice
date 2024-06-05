@@ -1,0 +1,78 @@
+<script src="./src/reactDev.js"></script>
+<script src="./src/reactDOM.js"></script>
+<script src="./src/babel.js"></script>
+
+<div id="root"></div>
+<style>
+
+</style>
+<script type="text/babel">
+    const Table = (props) => {
+        debugger
+        const { headers, data, columns } = props
+        return <div>
+            <table border="1px">
+                <thead>
+                    <tr>
+                        {
+                            headers?.map((e, i) => {
+                                return <th key={`th_${i}`}>{e}</th>
+                            })
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        data.map((el, ind) => {
+                            return <tr key={`tr_${ind}`}>
+                                {
+                                    columns?.map((key, i) => {
+                                        return <td key={`td_${i}`}>{el[key]}</td>
+                                    })
+                                }
+                            </tr>
+                        })
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    const App = () => {
+        const [user, setUser] = React.useState([])
+        const getUsers = (eve) => {
+            // console.log(eve.target)
+            const obj = new XMLHttpRequest()
+            //prepare the req
+            obj.open('get', 'https://jsonplaceholder.typicode.com/users')
+            //send the req
+            obj.send()
+            //process the req and send response ----server
+            //receive the response
+            //success 
+            obj.onload = () => {
+                console.log('success');
+                console.log(obj.responseText);
+                const res = JSON.parse(obj.responseText);
+                setUser(res)
+            }
+            //failure 
+            obj.onerror = () => {
+                console.log('fail');
+                console.log(obj.responseText);
+            }
+        }
+        return <div>
+            <button onClick={getUsers}>Get Users</button>
+            {//{user.length>0 && <Table headers={['ID', 'Name', 'User Name', 'Email']} data={user} columns={['id','name', 'username','email']}/>}//
+            }
+            <p>
+                {user.length > 0 ? <Table headers={['ID', 'Name', 'User Name', 'Email']} data={user} columns={['id', 'name', 'username', 'email']} /> : 'No Data'}
+            </p>
+        </div>
+    }
+
+    const container = document.getElementById("root");
+    const root = ReactDOM.createRoot(container)
+    root.render(<App />)
+
+</script>

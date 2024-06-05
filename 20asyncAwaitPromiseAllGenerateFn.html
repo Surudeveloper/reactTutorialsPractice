@@ -165,10 +165,89 @@
             })
 
             Promise.race(([promObj1,promObj2,promObj3])  // returns Promise {<fulfilled>:'prom2-200'} // value 
+        
 
+        //---------------------------Await----------------------------------------------------
+            Await is a simple keyword just like async 
+            to get the promise object  just add the keyword  await to the promise
+
+            function getObject(){
+                return new Promise((resolve, reject)=>{
+                    resolve({name:'suru'}) //if reject is there it wont work, then we should go for exceptional handling that is try catch
+                })
+            }
+            const result = await getObject(); // res = {name:'suru'}
+
+        //---------------------------Syntax Errors---------------------------------------------
+            1 when we dont follw the rule while writing the code we will get a syntax error.
+                console.log(1);
+                console.log(2);
+                console.log(3
+                console.log(4); // returns SyntaxError: missing ) after argument list
+
+                console.log(1);
+                console.log(2);
+                console.log(name);
+                console.log(4); // returns 1 2   4 (since name is predefined in window object as '')
+                
+        //-----------------------------ReferenceError---------------------------------
+            Execption = Runtime Error
+            1 ReferenceError will come while executing, this is also called as runtime Error
+                
+                console.log(1);
+                console.log(2);
+                console.log(suru);
+                console.log(4); // returns 1 2 ReferenceError: suru is not defined
+        
+        //-----------------------------TypeError---------------------------------
+            Execption = Runtime Error
+            1 TypeError will come while executing, this is also called as runtime Error
+                
+                console.log(1);
+                console.log(2);
+                console.log(suru.length);
+                console.log(4); // returns 1 2 TypeError: cant read the property of undefined (reading "length")
+
+            Every errors are predefined functional class 
+
+            try{
+                //problematic statements...
+            } catch(ex){
+                console.log('error', ex);
+            }
+        //------------------------------------------
+            //------------resolve case-------------
+                function getObject(){
+                    return new Promise((resolve, reject)=>{
+                        resolve({name:'suru'}) 
+                    })
+                }
+
+                try{
+                    const result = await getObject();
+                    console.log('success', result);           // success {name:'suru'}
+                } catch(ex){
+                    console.log('error', ex);
+                }
+
+            //------------reject case-------------
+                function getObject(){
+                    return new Promise((resolve, reject)=>{
+                        reject({name:'suru'}) 
+                    })
+                }
+
+                try{
+                    const result = await getObject();
+                    console.log('success', result);          
+                } catch(ex){
+                    console.log('error', ex);       // error {name:'suru'}
+                }
+
+                when not used the try catch it returns  uncaught  {name:'suru'} 
     */
     function f1() { // f1() will return a direct value
-        return 10
+        return 10 
     }
     async function f1() { //f1() will return a promise obj
         return 10
@@ -176,7 +255,7 @@
 
     f1()
         .then((data) => { // data is the return value of resolve
-            console.log('await called');
+            console.log('then called');
         })
         .catch((data) => { // data is the return value of reject
             console.log('catch called');
