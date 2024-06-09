@@ -1,0 +1,69 @@
+<script src="./src/reactDev.js"></script>
+<script src="./src/reactDOM.js"></script>
+<script src="./src/babel.js"></script>
+
+<div id="root"></div>
+<script type="text/babel">
+    // const List = (prop) => {
+    //     const{title}=prop
+    const List = ({ title, data, propName }) => {
+        return <div>
+            <h3>{title}</h3>
+            <ol>
+                {
+                    data?.map((obj, ind) => {
+                        return <li key={`li_${ind}`}>{obj[propName]}</li>
+                    })
+                }
+            </ol>
+        </div>;
+    }
+    const App = () => {
+        const Player = [{ "n": "sachin", 'r': 19000 }, { "n": "dhoni", 'r': 29000 }]
+        const [data, setData] = React.useState([])
+        const getPosts = async (eve) => {
+            /*
+                1. call url using fetch() ,if method is not mentioned by default it is get method
+                2. in fetch 1st tym in then it doesn't return the actual result thats why again then method is called  
+                3. 1st return the response what we are getting in 1st then() and convert it into JSON format using json() method
+            */
+            try {
+                const resp = await fetch('http://jsonplaceholder.typicode.com/posts') //this is the not required result
+                console.log('resp=> ', resp);
+                const res = await resp.json()
+                console.log('res=> ', res); //this is the req result
+            } catch (err) {
+                console.log('err=> ', err);
+            } finally {
+                console.log('finally');
+            }
+            /*
+                fetch('http://jsonplaceholder.typicode.com/posts')
+                .then((res)=>{
+                    console.log('res=> ',res); 
+                    return  res.json(); // 1st return the response what we are getting here and convert it into JSON format using json() method        
+                })
+                .then((result)=>{ // in fetch 1st tym in then it doesn't return the actual result thats why again then method is called
+                    console.log('result=> ',result); 
+                    setData(result)               
+                })
+                .catch((err)=>{
+                    console.log('err=> ',err);
+                    })
+                .finally(()=>{
+                    console.log('finally');
+                })
+            */
+
+        }
+        return <div>
+            <button onClick={() => getPosts()}>Post</button>
+            {data?.length > 0 && <List title={'POST'} data={data} propName={'title'} />}
+        </div>
+    }
+
+    const container = document.getElementById("root");
+    const root = ReactDOM.createRoot(container)
+    root.render(<App />)
+
+</script>

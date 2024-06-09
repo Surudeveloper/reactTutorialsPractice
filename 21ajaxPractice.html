@@ -1,0 +1,86 @@
+<!-- 
+    * Should display photo data in the table (any 3 column) using XMLHttpRequest 
+    * URL = https://jsonplaceholder.typicode.com/post
+    * method= get
+    * send the req on button click
+    * TextBox1: send req using XMLHttpRequest and get the response and update into state variable (data)
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./src/reactDev.js"></script>
+    <script src="./src/reactDOM.js"></script>
+    <script src="./src/babel.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const Table = (prop) => {
+            const { headers, column, data } = prop
+            return <div>
+                <table border="1px" >
+                    <thead>
+                        <tr>
+                            {
+                                headers?.map((e, ind) => {
+                                    return <th key={`th_${ind}`}>{e}</th>
+                                })
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            data?.map((val, i) => {
+                                return <tr key={`tr_${i}`}>
+                                    {
+                                        column?.map((key, ind) => {
+                                            return <td key={`td_${ind}`}>{val[key]}</td>
+                                        })
+                                    }
+                                </tr>
+                            })
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+
+        const App = () => {
+            const [res, setRes] = React.useState([])
+
+            const getPhotos = () => {
+
+                const obj = new XMLHttpRequest()
+                obj.open('get', 'https://jsonplaceholder.typicode.com/users')
+                obj.send()
+                obj.onload = () => {
+                    const res = JSON.parse(obj.responseText)
+                    setRes(res)
+                    console.log('success', res);
+                }
+                obj.onerror = () => {
+                    console.log('error');
+                    const res = JSON.parse(obj.responseText)
+                    setRes(res)
+                }
+            }
+            return <div>
+                <button onClick={getPhotos}>Show Photos</button>
+                {data.length>0 && <Table headers={['Name', 'Website', 'Email']} data={res} column={['name', 'website', 'email']} />}
+            </div>
+        }
+
+        var container = document.getElementById("root")
+        var root = ReactDOM.createRoot(container)
+        root.render(<App />)
+
+    </script>
+
+</body>
+
+</html>

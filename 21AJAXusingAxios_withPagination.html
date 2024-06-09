@@ -1,0 +1,75 @@
+<script src="./src/reactDev.js"></script>
+<script src="./src/reactDOM.js"></script>
+<script src="./src/babel.js"></script>
+<script src="./src/axios.js"></script>
+
+<link rel="stylesheet" href="./src/bootstrap.css">
+<div id="root"></div>
+<script type="text/babel">
+    const Table = (props) => {
+        const { headers, data, columns } = props
+        return <div>
+            <div className="table-responsive">
+                <table border="1px" className='table table-striped align-middle'>
+                    <thead>
+                        <tr>
+                            {
+                                headers?.map((e, i) => {
+                                    return <th key={`th_${i}`}>{e}</th>
+                                })
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            data?.map((el, ind) => {
+                                return <tr key={`tr_${ind}`}>
+                                    {
+                                        columns?.map((key, i) => {
+                                            return <td key={`td_${i}`}>{el[key]}</td>
+                                        })
+                                    }
+                                </tr>
+                            })
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    const App = () => {
+        const [data, setData] = React.useState([])
+        const [isLoading, setLoader] = React.useState(false)
+        const getPhotos = (eve) => {
+            setLoader(true) //for loader show
+            axios.get('http://jsonplaceholder.typicode.com/photos')
+                .then((res) => {
+                    setData(res?.data)
+                })
+                .catch((err) => {
+                    console.log('err', err);
+                })
+                .finally(() => {
+                    setLoader(false)
+                })
+        }
+        return <div>
+            <button className='btn btn-primary' onClick={getPhotos}>Get Photos</button>
+            {isLoading && <div>Loading...</div>}
+            {data.length > 0 && <Table
+                headers={['ID', 'Title', 'URL', 'ThumbnailUrl']}
+                data={data}
+                columns={['id', 'title', 'url', 'thumbnailUrl']}
+            // headers={['ID', 'Title', 'Body']}
+            // data={data}
+            // columns={['id', 'title', 'body']}
+
+            />}
+        </div>
+    }
+
+    const container = document.getElementById("root");
+    const root = ReactDOM.createRoot(container)
+    root.render(<App />)
+
+</script>
