@@ -6,10 +6,76 @@
 <link rel="stylesheet" href="./src/bootstrap.css">
 <div id="root"></div>
 <script type="text/babel">
+    const Pagination = ({ pageNo, totalPages, handlePagination }) => {
+        const [goTo, setGoTo] = React.useState('')
+
+        const goToPage = () => {
+            console.log('goTo', goTo);
+            if (goTo > totalPages) return
+            handlePagination('G', Number(goTo))
+        }
+        const fnPrev = () => {
+            handlePagination('P')
+        }
+        const fnNext = () => {
+            handlePagination('N')
+        }
+        return <div className='container-fluid'>
+            <div className='row'>
+                <div className='col-sm-4 text-start'>
+                    <b>Go To :</b>
+                    <input type="number" onChange={(eve) => setGoTo(eve?.target?.value)} />
+                    <button onClick={goToPage} className='btn btn-primary' >Go</button>
+                </div>
+                <div className='col-sm-4 text-center'>
+                    <button className='btn btn-primary' disabled={pageNo == 1} onClick={fnPrev}>Prev</button>
+                    <b>{pageNo}</b>
+                    <button className='btn btn-primary' disabled={pageNo == totalPages} onClick={fnNext}>Next</button>
+                </div>
+                <div className='col-sm-4 text-end'>
+                    <b>Total Pages:{totalPages}</b>
+                </div>
+            </div>
+        </div>
+    }
+
     const Table = (props) => {
-        const { headers, data, columns } = props
+        const { headers, data, columns, isPaginationTop } = props
+
+        const perPage = 10
+        const [currData, setCurrData] = React.useState([])
+        const [pageNo, setPageNo] = React.useState(1)
+        React.useEffect(() => {
+            let end = pageNo * perPage //1*10=10
+            let start = end - perPage //10-10=0
+            console.log(start,end);
+            // let tblData=data.slice(0,10)
+            let tblData = data.slice(start, end)
+            setCurrData(tblData)
+        }, [pageNo])
+        const handlePagination = (opt, goToPageNo) => {
+            switch (opt) {
+                case 'N':
+                    setPageNo(pageNo + 1)
+                    break;
+                case 'P':
+                    setPageNo(pageNo - 1)
+                    break;
+                default:
+                    setPageNo(goToPageNo)
+                    break;
+            }
+        }
         return <div>
             <div className="table-responsive">
+                {
+                    isPaginationTop &&
+                    <Pagination
+                        pageNo={pageNo}
+                        totalPages={Math.ceil(data?.length / perPage)}
+                        handlePagination={handlePagination}
+                    />
+                }
                 <table border="1px" className='table table-striped align-middle'>
                     <thead>
                         <tr>
@@ -22,7 +88,8 @@
                     </thead>
                     <tbody>
                         {
-                            data?.map((el, ind) => {
+                            // data?.map((el, ind) => {
+                            currData?.map((el, ind) => {
                                 return <tr key={`tr_${ind}`}>
                                     {
                                         columns?.map((key, i) => {
@@ -34,6 +101,10 @@
                         }
                     </tbody>
                 </table>
+                <Pagination
+                    pageNo={pageNo}
+                    totalPages={Math.ceil(data?.length / perPage)}
+                    handlePagination={handlePagination} />
             </div>
         </div>
     }
@@ -41,13 +112,13 @@
         const [data, setData] = React.useState([])
         const [isLoading, setLoader] = React.useState(false)
         const getPhotos = async (eve) => {
-            try{
+            try {
                 setLoader(true) //for loader show
                 const res = await axios.get('http://jsonplaceholder.typicode.com/photos')
                 setData(res?.data)
-            } catch(err){
+            } catch (err) {
                 console.log(err);
-            } finally{
+            } finally {
                 setLoader(false) //for loader hide
             }
         }
@@ -58,6 +129,7 @@
                 headers={['ID', 'Title', 'URL', 'ThumbnailUrl']}
                 data={data}
                 columns={['id', 'title', 'url', 'thumbnailUrl']}
+                isPaginationTop={true}
             />}
         </div>
     }

@@ -1,0 +1,34 @@
+<script src="./src/reactDev.js"></script>
+<script src="./src/reactDOM.js"></script>
+<script src="./src/babel.js"></script>
+<script src="./src/axios.js"></script>
+
+<link rel="stylesheet" href="./src/bootstrap.css">
+<div id="root"></div>
+<script type="text/babel">
+    const Child = (prop) => {
+        const fnChangeName = () => {
+            // prop.name='Dhoni' //As a children it cannot change the property of props from parent
+            prop.cb('Dhoni');
+        }
+        return <div>
+            <h3>Child</h3>
+            <button onClick={fnChangeName}>Change Name</button>
+        </div>
+    }
+    const App = () => {
+        const [name, setName] = React.useState('Kohli')
+        const cb=(data)=>{
+            setName(data)
+        }
+        return <div>
+            <h3>App</h3>
+            <Child name={name} cb={cb}/>
+        </div>
+    }
+
+    const container = document.getElementById("root");
+    const root = ReactDOM.createRoot(container)
+    root.render(<App />)
+
+</script>
