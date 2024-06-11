@@ -45,6 +45,7 @@
         const perPage = 10
         const [currData, setCurrData] = React.useState([])
         const [pageNo, setPageNo] = React.useState(1)
+        
         React.useEffect(() => {
             let end = pageNo * perPage //1*10=10
             let start = end - perPage //10-10=0
@@ -53,6 +54,7 @@
             let tblData = data.slice(start, end)
             setCurrData(tblData)
         }, [pageNo])
+
         const handlePagination = (opt, goToPageNo) => {
             switch (opt) {
                 case 'N':

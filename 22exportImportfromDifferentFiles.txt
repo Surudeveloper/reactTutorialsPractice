@@ -1,0 +1,288 @@
+/////////////////////////exporting and importing default//////////////////////////////////////
+folder
+    1.js
+        const n1=10
+        export default n1 
+
+    2.js
+        const n2=20
+        export default n2
+
+    3.js
+        import n1 from './1.js' // default exported can be imported by any name (eg. import x from './1.js')
+        import n2 from './2.js'
+
+        function sum(){
+            console.log(n1+n2)
+        }
+        sum() //30
+
+//////////////////////////exporting and importing other than default/////////////////////////////////////
+
+folder
+    1.js
+        const n1=10   
+        export const n3=30 // ###correct way is exporting inline
+        // export n1,n3  //invalid syntax
+        // export default n1,n3  //invalid syntax
+        export default n1
+        // export default n3 // ### max only 1 default export
+
+    2.js
+        const n2=20
+        export default n2
+
+    3.js
+        import x, {n3} from './1.js'  //non default can be imported by using destructuring method with same name
+        import n2 from './2.js'
+
+        function sum(){
+            //console.log(n1+n2+n3)
+            console.log(x+n2+n3)
+        }
+        sum() //60
+        
+///////////////////////////exporting and importing other than default with destructuring////////////////////////////////////
+
+folder
+    1.js
+        export const n1=10   
+        export const n3=30 
+
+    2.js
+        const n2=20
+        export default n2
+
+    3.js
+        import {n1,n3} from './1.js'  //non default can be imported by using destructuring method with same name
+        import n2 from './2.js'
+
+        function sum(){
+            console.log(n1+n2+n3)
+        }
+        sum() //60
+
+/////////////////////////exporting and importing a class with destructuring//////////////////////////////////////
+
+folder
+    1.js
+        export const n1=10   
+        function fn(){
+            return 30
+        }
+
+        export default fn
+
+    2.js
+        const n2=20
+        export default n2
+
+    3.js
+        class A {
+            getVal(){
+                return 50
+            }
+        }
+        export default A
+
+    4.js
+        import fun, {n1} from './1.js'  //non default can be imported by using destructuring method with same name
+        import n2 from './2.js'
+        import A from './3.js'
+
+        function sum(){
+            console.log(n1+n2+fun()+ new A().getVal())
+        }
+        sum() //60
+
+////////////////////////////getting data from different folders///////////////////////////////////
+
+folder
+    1.js
+        export const n1=10   
+        function fn(){
+            return 30
+        }
+
+        export default fn
+
+        folder
+            2.js
+                const n2=20
+                export default n2
+
+            3.js
+                import fun, {n1} from '../1.js'  //non default can be imported by using destructuring method with same name
+                import n2 from './2.js' //(./ for same folder content) &  (../ for 1 level up folder content)
+                
+                function sum(){
+                    console.log(n1+n2+fun()+ new A().getVal())
+                }
+                sum() //60
+
+////////////////////////////getting data from 2 folders///////////////////////////////////
+
+folder
+    1.js
+        export const n1=10   
+        function fn(){
+            return 30
+        }
+
+        export default fn
+
+        folder
+            2.js
+                const n2=20
+                export default n2
+
+            folder
+                3.js
+                    import fun, {n1} from '../../1.js'  
+                    import n2 from '../2.js' //(./ for same folder content) &  (../ for 1 level up folder content)
+                    
+                    function sum(){
+                        console.log(n1+n2+fun()+ new A().getVal())
+                    }
+                    sum() //60
+
+/////////////////////////////getting data from folder3//////////////////////////////////
+
+folder1
+    1.js
+        export const n1=10   
+        function fn(){
+            return 30
+        }
+
+        export default fn
+
+        folder2          
+            3.js
+                import fun, {n1} from '../1.js'  
+                import n2 from './folder3/2.js' //(./for that folder content then folder3 and inside it 2.js file)
+                
+                function sum(){
+                    console.log(n1+n2+fun()+ new A().getVal())
+                }
+                sum() //60
+            folder3
+                2.js
+                    const n2=20
+                    export default n2
+
+/////////////////////////////////folder structure for code////////////////////////////////////////////////////////
+
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+npm
+
+index.html
+    <div id="root"></div>
+
+BoxFolder 
+    Box.js
+
+        import "./Box.css"
+        
+        const Box = (props) => {
+            const { name, no } = props;
+            return <div className="box">{name} {no}</div>
+        }
+
+        export default Box;
+    
+    Box.css
+        .box {
+            width: 100px;
+            line-height: 100px;
+            border: 1px solid red;
+            display: inline-block;
+            text-align: center;
+        }
+
+App.js
+
+    import Box from "./BoxFolder/Box.js"
+
+    const App = () => {
+        return <div>
+            <div>
+                <Box no="1" name="Sachin" /><Box no="2" name="Dhoni" />
+            </div>
+            <div>
+                <Box name="Kohli" no="3" /><Box name="UV" no="4" />
+            </div>
+        </div>
+    }
+
+    export default App
+
+
+index.js
+
+    import App from "./App.js"
+
+    const container = document.getElementById('root');
+    const root = ReactDOM.createRoot(container);
+    root.render(<App />);
+
+
+/////////////////////////////////by default index.js file////////////////////////////////////////////////////////
+
+npm 
+
+index.html
+    <div id="root"></div>
+
+BoxFolder 
+    Box.js
+
+        import "./Box.css"
+        
+        const Box = (props) => {
+            const { name, no } = props;
+            return <div className="box">{name} {no}</div>
+        }
+
+        export default Box;
+
+    index.js
+        import Box from './Box.js'
+        export default Box
+    
+    Box.css
+        .box {
+            width: 100px;
+            line-height: 100px;
+            border: 1px solid red;
+            display: inline-block;
+            text-align: center;
+        }
+
+App.js
+
+    import Box from "./BoxFolder      //### by default it will target index.js when only folder name is there 
+
+    const App = () => {
+        return <div>
+            <div>
+                <Box no="1" name="Sachin" /><Box no="2" name="Dhoni" />
+            </div>
+            <div>
+                <Box name="Kohli" no="3" /><Box name="UV" no="4" />
+            </div>
+        </div>
+    }
+
+    export default App
+
+
+index.js
+
+    import App from "./App.js"
+
+    const container = document.getElementById('root');
+    const root = ReactDOM.createRoot(container);
+    root.render(<App />);
