@@ -1,0 +1,69 @@
+next 14.2.4 version
+
+1st looking for layout.js file, if found it will create it automatically
+then it will expect for export default component ie, RootLayout component
+
+the it will check for path
+    #1 if no path is there, looking for src/app/page.js and look for export default component say C
+        it will then load 
+        <RootLayout n1='1'>
+            <C/>  as a children
+        </RootLayout>
+
+        const RootLayout=({n1, children})=>{
+            return <html>
+                <head></head>
+                <body>
+                    {children}
+                </body>
+            </html>
+        }
+
+        export default RootLayout
+
+    #2 if path is there say /home
+        looking for src/app/home/page.js and look for export default component say C2
+        it will then load 
+        <RootLayout n1='1'>
+            <C2/>  as a children
+        </RootLayout>
+
+        const RootLayout=({n1, children})=>{
+            return <html>
+                <head></head>
+                <body>
+                    {children}
+                </body>
+            </html>
+        }
+
+        export default RootLayout
+
+        //--------------------nvm----------------------------------
+        uninstall node
+        install nvm software
+
+            following are some commands to use nvm:
+
+            (nvm install 14.17.3) => to install node specific version 
+            (nvm ls ) => to check the list of installed version of node
+            (nvm use 14.17.3) => to use node specific version
+            (nvm -v ) => for current node version
+            (nvm uninstall 14.17.3) => to uninstall node specific version
+
+
+        //-------------------dependencies version symbol and meaning--------------------------------
+        we can have 3 type of version
+
+        whenever we use npm i with below cases
+            1. ~12.1.1  (~=> tilde symbol) it freezes major and minor both and automatically update patches
+            2. ^12.1.1  (^=> caret symbol) it freezes major and automatically update  minor and patches both 
+            3. 12.1.1 
+
+        To check all libraries latest version
+            npm i -g npm-check-updates
+
+            * to update all major minor and patch version => npm -u
+            * to update minor and patch version => npm -u -t minor
+            * to update patch version => npm -u -t patch
+            * here -u for update -t for target
