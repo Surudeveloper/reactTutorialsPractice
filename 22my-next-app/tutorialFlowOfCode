@@ -1,0 +1,44 @@
+/*
+DEV
+    Home
+        Home.js
+            import './Home.css'
+            const Home=()=>{
+                return <div className="clr">home</div>
+            }
+            export default Home 
+        Home.css
+            .crl{
+                color:red
+            }
+        index.js
+            import Home from'./Home.js'
+            export default Home;
+
+    About
+        About.js
+            import './About.css'
+            const About=()=>{
+                return <div className="clr">About</div>
+            }
+            export default About 
+        About.css
+            .crl{
+                color:blue
+            }
+        index.js
+            import About from'./About.js'
+            export default About;
+
+BUILD
+    minified code 
+    .crl{ // both get merged in single file
+        color:blue; // this blue color gets overwritten by red color 
+        color:red;      
+    }
+
+    * there is conflict of css by writing our own css 
+    * this can be avoided by using .module.css
+    * it will create a dynamic class for all files eg, clr1 for 1st and clr2 for 2nd
+
+*/

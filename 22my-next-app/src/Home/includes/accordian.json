@@ -1,0 +1,14 @@
+[
+    {
+        "heading":"Mobile app",
+        "body":"A mobile application or app is a computer program or software application designed to run on a mobile device such as a phone, tablet, or watch. Mobile applications often stand in contrast to desktop applications which are designed to run on desktop computers, and web applications which run in mobile web browsers rather than directly on the mobile device."
+    },
+    {
+        "heading":"Overview",
+        "body":"Most mobile devices are sold with several apps bundled as pre-installed software, such as a web browser, email client, calendar, mapping program, and an app for buying music, other media, or more apps. Some pre-installed apps can be removed by an ordinary uninstall process, thus leaving more storage space for desired ones. Where the software does not allow this, some devices can be rooted to eliminate the undesired apps."   
+    },
+    {
+        "heading":"Native app",
+        "body":"All apps targeted toward a particular mobile platform are known as native apps. Therefore, an app intended for Apple device does not run in Android devices. As a result, most businesses develop apps for multiple platforms."
+    }
+]

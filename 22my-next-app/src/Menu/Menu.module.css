@@ -1,0 +1,17 @@
+.menu{
+    text-align: right;
+    background: #f4dddd;
+    line-height: 35px;
+}
+
+.menu > a {
+    margin-right: 15px;
+    font-weight: bold;
+    font-size: large;
+    letter-spacing: 2px;
+}
+
+.active{
+    /* background: #ff7777; */
+    color: #fc5209;
+}
