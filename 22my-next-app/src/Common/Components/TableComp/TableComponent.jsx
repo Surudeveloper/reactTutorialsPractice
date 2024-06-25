@@ -8,6 +8,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import TablePagination from '@mui/material/TablePagination';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -31,27 +32,44 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 
 
-const TableComponent = ({headers,data,columns}) => {
+const TableComponent = ({headers,rows,columns}) => {
+  
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   return (
     <div>
-      <TableContainer component={Paper}>
+      <Paper sx={{ width: '100%' }}>
+      <TableContainer>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
             {
               headers?.map((el,ind)=>{
-                return  <StyledTableCell  align="right" key={`head_${ind}`}>{el} </StyledTableCell>
+                return  <StyledTableCell  align="center" key={`head_${ind}`}>{el} </StyledTableCell>
               })
             }
           </TableRow>
         </TableHead>
         <TableBody>
           {
-            data?.map((obj,ind)=>{
-              return <StyledTableRow  align="right" key={`tr_${ind}`}>
+            (rowsPerPage > 0
+              ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              : rows
+            )?.map((obj,ind)=>{
+              return <StyledTableRow  align="center" key={`tr_${ind}`}>
                 {
                   columns?.map((ele,index)=>{
-                    return <StyledTableCell align="right" key={`td_${index}`}>{obj[ele]}</StyledTableCell>
+                    return <StyledTableCell align="center" key={`td_${index}`}>{obj[ele]}</StyledTableCell>
                   })
                 }
             </StyledTableRow>
@@ -60,7 +78,17 @@ const TableComponent = ({headers,data,columns}) => {
           
         </TableBody>
       </Table>
-      </TableContainer>      
+      </TableContainer>  
+      <TablePagination
+        rowsPerPageOptions={[10, 25, 100]}
+        component="div"
+        count={rows.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />   
+      </Paper> 
     </div>
   );
 };

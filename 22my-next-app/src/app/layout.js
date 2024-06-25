@@ -17,7 +17,9 @@ export default function NIT({ children }) {
       <body >
         <Header />
         <Menu />
-        {children}
+        <div className="mb-5">
+          {children}
+        </div>
         <Footer />
       </body>
     </html>

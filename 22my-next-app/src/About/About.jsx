@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import styles from "./About.module.css";
 import Button from "@mui/material/Button";
+import TableComponent from '@/Common/Components/TableComp';
 
 const About = () => {
   const [res,setRes] = useState([])
@@ -21,7 +22,7 @@ const About = () => {
       })
       const result = await rslt.json()
       setRes(result)
-        console.log(result); 
+        // console.log(result); 
     }catch(err){
       console.log(err);
     }finally{
@@ -35,7 +36,9 @@ const About = () => {
       <Button
         onClick={getPostHandler}
         variant="contained"
+        className='mb-2'
       >Send </Button>
+    {res.length>0 && <TableComponent headers={['Id','Title','Body']} rows={res} columns={['id','title','body']}/>}
     </div>
   );
 };
