@@ -1,9 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Menu.css";
 import Home from "../Home";
 import Contact from "../Contact";
 import About from "../About";
-import { Link, HashRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import {
+  Link,
+  HashRouter,
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+} from "react-router-dom";
 
 const menuItems = [
   {
@@ -21,25 +28,38 @@ const menuItems = [
 ];
 
 const Menu = () => {
-  const location=useLocation();
-  const {pathname}=location
-  const [item,setItem]=useState(pathname)
-  
-  const handleClick=(txt)=>{
-    setItem(txt)
-  }
+  const location = useLocation();
+  const { pathname } = location;
+  const [item, setItem] = useState(pathname);
+  // const [isMobileMenu, setIsMobileMenu] = useState(true );
+  const [isMobileMenu, setIsMobileMenu] = useState(
+    document.body.clientWidth > 700 ? false : true
+  );
+
+  const handleClick = (txt) => {
+    setItem(txt);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+  }, []);
+
+  const handleResize = () => {
+    var width = document.body.clientWidth;
+    setIsMobileMenu(width > 600 ? false : true);
+  };
   return (
     <>
-      <div className="menu">
-        {/* <Home/>
-      <Contact/>
-      <About/> */}
-        {/* <a href="/home">Home</a>
-      <a href="/contact">Contact</a>
-      <a href="/about">About</a> */}
+      {/* <div className="menu"> */}
+      <div className={isMobileMenu ? "mobileMenu" : "menu"}>
         {menuItems?.map(({ link, text }, idx) => {
           return (
-            <Link to={link} key={`li_${idx}`} onClick={()=>handleClick(link)} className={item==link?'active':''}>
+            <Link
+              to={link}
+              key={`li_${idx}`}
+              onClick={() => handleClick(link)}
+              className={item == link ? "active" : ""}
+            >
               {text}
             </Link>
           );
