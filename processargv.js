@@ -16,3 +16,6 @@ console.log(add(+n1,+n2))
 // console.log(add(n1,+n2))
 // console.log(add(+n1,n2))
 console.log(add(parseInt(n1),parseInt(n2)))
+
+
+//for result type / node processargv 12 13 / in the terminal

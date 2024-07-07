@@ -3,7 +3,7 @@ import './Footer.css'
 
 export const Footer = () => {
   return (
-    <div className="bg-primary text-white position-fixed bottom-0 w-100">
+    <div className="bg-primary text-white position-fixed bottom-0 w-100 text-center">
       &copy; rights belogs to SuRu
     </div>
   )

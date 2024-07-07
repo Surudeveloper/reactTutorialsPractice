@@ -5,7 +5,7 @@ import Contact from "../Contact";
 import About from "../About";
 import {
   Link,
-  HashRouter,
+  // HashRouter,
   Routes,
   Route,
   Navigate,
@@ -29,15 +29,19 @@ const menuItems = [
 
 const Menu = () => {
   const location = useLocation();
-  const { pathname } = location;
+  var { pathname } = location;
+
+  pathname = pathname === "/" ? "/home" : pathname;
   const [item, setItem] = useState(pathname);
+  const [left, setLeft] = useState(-150);
   // const [isMobileMenu, setIsMobileMenu] = useState(true );
   const [isMobileMenu, setIsMobileMenu] = useState(
-    document.body.clientWidth > 700 ? false : true
+    document.body.clientWidth > 800 ? false : true
   );
 
   const handleClick = (txt) => {
     setItem(txt);
+    setLeft(-150);
   };
 
   useEffect(() => {
@@ -46,19 +50,35 @@ const Menu = () => {
 
   const handleResize = () => {
     var width = document.body.clientWidth;
-    setIsMobileMenu(width > 600 ? false : true);
+    setIsMobileMenu(width > 800 ? false : true);
+  };
+
+  const handleMenuBtn = () => {
+    setLeft(left === 0 ? -150 : 0);
+    // left==(-150)?setLeft(0):setLeft(-150)
   };
   return (
     <>
       {/* <div className="menu"> */}
-      <div className={isMobileMenu ? "mobileMenu" : "menu"}>
+      {isMobileMenu && (
+        <button className="menuBtn" onClick={handleMenuBtn}>
+          {" "}
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      )}
+      <div
+        style={{ left: left }}
+        className={isMobileMenu ? "mobileMenu" : "menu"}
+      >
         {menuItems?.map(({ link, text }, idx) => {
           return (
             <Link
               to={link}
               key={`li_${idx}`}
               onClick={() => handleClick(link)}
-              className={item == link ? "active" : ""}
+              className={item === link ? "active" : ""}
             >
               {text}
             </Link>

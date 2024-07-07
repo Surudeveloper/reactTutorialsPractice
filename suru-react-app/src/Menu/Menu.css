@@ -26,23 +26,10 @@
     left: -165px;
     /* left: 0px; */
     transition: left 0.5s;
-    margin-top: -8px;
     display: inline-block;
 }
 
 .mobileMenu>a {
-    /* margin-right: 15px;
-    font-weight: bold;
-    font-size: large;
-    letter-spacing: 2px;
-    display: block;
-    text-align: left;
-    padding: 10px;
-    position: absolute;    
-    left: -165px;
-    left:0px;
-    transition: left 1s; */
-
     margin-right: 15px;
     font-weight: bold;
     font-size: large;
@@ -50,4 +37,20 @@
     display: block;
     text-align: left;
     padding: 10px;
+}
+
+.menuBtn {
+    position: absolute;
+    right: 0;
+    border: 1px;
+    height: 35px;
+    width: 45px;
+    background-color: #fc5209;
+}
+
+.menuBtn>span {
+    border: 1px solid rgb(250, 194, 194);
+    width: 25px;
+    display: block;
+    margin: 4px;
 }
